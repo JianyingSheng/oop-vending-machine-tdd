@@ -14,3 +14,15 @@ class Chips(Product):
     """child class of Product"""
     name: str = 'Chips'
     price: int = 225
+
+@dataclass
+class Drink(Product):
+    """child class of Product"""
+    name: str = 'Drink'
+    price: int = 275
+
+@dataclass
+class Candy(Product):
+    """child class of Product"""
+    name: str = 'Candy'
+    price: int = 315
