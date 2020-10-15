@@ -18,3 +18,4 @@ class VendingMachine():
         if not isinstance(coin,coins.Coin):
             raise ValueError
         self.insert_coins.append(coin)
+        return self.insert_coins
