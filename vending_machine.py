@@ -46,6 +46,8 @@ class VendingMachine():
     def get_change(self):
         """
         method to return change, larger coin value first
+        not perfect one since when test 85 we expect 3 quarter and 1 dime
+        this will give 2 quarter 3 dime 1 nickel 
         """
         coins_list = [coins.Toonie(),coins.Loonie(),coins.Quarter(),
                       coins.Dime(), coins.Nickel()]

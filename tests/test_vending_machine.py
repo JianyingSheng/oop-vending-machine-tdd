@@ -99,7 +99,8 @@ def test_get_change_balance_25():
 
 def test_get_change_balance_265():
     """
-    When the balance is 265, a toonie, two quarters, a dime and a nickel should be returned
+    When the balance is 265, a toonie, two quarters, a dime and a
+    nickel should be returned
     """
     machine = vending_machine.VendingMachine()
     quarter = coins.Quarter()
@@ -112,3 +113,26 @@ def test_get_change_balance_265():
     machine.insert_coin(dime)
     machine.insert_coin(nickel)
     assert machine.get_change() == [toonie,quarter,quarter,dime,nickel]
+
+def test_vending_machine_whole():
+    """
+    Here we do a integrated test to simulate a action of using vending machine
+    """
+    machine1 = vending_machine.VendingMachine()
+    quarter = coins.Quarter()
+    toonie = coins.Toonie()
+    dime = coins.Dime()
+    nickel = coins.Nickel()
+    loonie = coins.Loonie()
+    candy = products.Candy()
+    chips = products.Chips()
+    machine1.insert_coin(toonie)
+    machine1.insert_coin(loonie)
+    machine1.insert_coin(loonie)
+    machine1.insert_coin(toonie)
+    machine1.insert_coin(quarter)
+    candy = products.Candy()
+    chips = products.Chips()
+    machine1.buy_product(candy)
+    machine1.buy_product(chips)
+    assert machine1.get_change() == [quarter,quarter,dime,dime,dime,nickel]
