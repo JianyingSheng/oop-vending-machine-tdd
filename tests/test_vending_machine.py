@@ -4,6 +4,8 @@ test_vending_machine.py
 import pytest
 import vending_machine
 import coins
+import products
+from vending_machine import InsufficientFunds
 
 def test_insert_coin_reject_not_coin_class():
     """
@@ -30,7 +32,7 @@ def test_insert_dime():
 
 def test_insert_dime_nickel():
     """
-    test insert coin append right
+    test insert coin appended right
     """
     machine= vending_machine.VendingMachine()
     dime = coins.Dime()
@@ -38,3 +40,44 @@ def test_insert_dime_nickel():
     machine.insert_coin(dime)
     machine.insert_coin(nickel)
     assert machine.insert_coins == [dime,nickel]
+
+def test_get_balance_0():
+    """
+    test when no coins are inserted, and no purchases have been made,
+    the balance should be zero
+    """
+    machine = vending_machine.VendingMachine()
+    assert machine.get_balance() == 0
+
+def test_get_balance_two_loonie_candy_75():
+    """
+    given that two toonies are inserted into the machine and a candy bar
+     was purchased, the method should return 85.
+    """
+    machine = vending_machine.VendingMachine()
+    toonie = coins.Toonie()
+    candy = products.Candy()
+    machine.insert_coin(toonie)
+    machine.insert_coin(toonie)
+    machine.buy_product(candy)
+    assert machine.get_balance() == 85
+    #there is a typo in README file
+def test_buy_product_with_insufficient_funds():
+    """
+    test buy product with insufficient funds
+    """
+    machine = vending_machine.VendingMachine()
+    dime = coins.Dime()
+    nickel = coins.Nickel()
+    machine.insert_coin(dime)
+    machine.insert_coin(nickel)
+    drink = products.Drink()
+    with pytest.raises(InsufficientFunds):
+        machine.buy_product(drink)
+def test_buy_product_with_integer_product():
+    """
+    test buy product with string input
+    """
+    machine = vending_machine.VendingMachine()
+    with pytest.raises(ValueError):
+        machine.buy_product("not a product type")
