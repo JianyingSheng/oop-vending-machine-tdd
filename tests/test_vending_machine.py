@@ -81,3 +81,34 @@ def test_buy_product_with_integer_product():
     machine = vending_machine.VendingMachine()
     with pytest.raises(ValueError):
         machine.buy_product("not a product type")
+def test_get_change_balance_0():
+    """
+    When the balance is 0, no quarters should be returned
+    """
+    machine = vending_machine.VendingMachine()
+    assert machine.get_change() == []
+
+def test_get_change_balance_25():
+    """
+    When the balance is 25, a quarter should be returned
+    """
+    machine = vending_machine.VendingMachine()
+    quarter = coins.Quarter()
+    machine.insert_coin(quarter)
+    assert machine.get_change() == [quarter]
+
+def test_get_change_balance_265():
+    """
+    When the balance is 265, a toonie, two quarters, a dime and a nickel should be returned
+    """
+    machine = vending_machine.VendingMachine()
+    quarter = coins.Quarter()
+    toonie = coins.Toonie()
+    dime = coins.Dime()
+    nickel = coins.Nickel()
+    machine.insert_coin(quarter)
+    machine.insert_coin(toonie)
+    machine.insert_coin(quarter)
+    machine.insert_coin(dime)
+    machine.insert_coin(nickel)
+    assert machine.get_change() == [toonie,quarter,quarter,dime,nickel]

@@ -21,8 +21,6 @@ class VendingMachine():
         self.insert_coins.append(coin)
         return self.insert_coins
 
-
-
     def buy_product(self, product):
         """
         buy product from vending machine
@@ -33,7 +31,6 @@ class VendingMachine():
             raise InsufficientFunds
         self.purchases.append(product)
         return self.purchases
-
 
     def get_balance(self):
         """
@@ -46,7 +43,22 @@ class VendingMachine():
             balance -= product.price
         return balance
 
-
+    def get_change(self):
+        """
+        method to return change, larger coin value first
+        """
+        coins_list = [coins.Toonie(),coins.Loonie(),coins.Quarter(),
+                      coins.Dime(), coins.Nickel()]
+        list_changes = []
+        temp = self.get_balance()
+        temp -= temp % 5
+        while temp > 0:
+            for coin in coins_list:
+                if temp % coin.value == 0:
+                    list_changes.append(coin)
+                    temp -= coin.value
+                    break
+        return sorted(list_changes,key=lambda customer:customer.value, reverse=True)
 
 class InsufficientFunds(Exception):
     """
